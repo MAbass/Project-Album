@@ -1,4 +1,5 @@
 # Project-Album
+You needed **Glassfish** like server and all of configuration is in **src/main/resources/META-INF/persistence.xml**
 Just add the code sql <br/>
 **"ALTER TABLE `java_ee`.`userAlbum` 
 DROP FOREIGN KEY `FK_userAlbum_albumUserId`;
