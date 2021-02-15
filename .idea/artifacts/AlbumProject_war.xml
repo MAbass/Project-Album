@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="AlbumProject:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>AlbumProject</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="AlbumProject-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="AlbumProject:war exploded" />
+    </root>
+  </artifact>
+</component>
