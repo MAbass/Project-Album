@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class ImageForm {
@@ -50,7 +52,11 @@ public class ImageForm {
         byte[] bytes = readBytes(initialStream);
 
         BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
-        Image img = new Image(titre, type, desc, motscles, album, bufferedImage.getHeight(), bufferedImage.getWidth());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String currentTime = formatter.format(date);
+
+        Image img = new Image(titre, type, desc, motscles, album, bufferedImage.getHeight(), bufferedImage.getWidth(), currentTime, currentTime);
 
         boolean status = this.imageInterface.ajouter(img);
         if (status) {
@@ -114,6 +120,12 @@ public class ImageForm {
         image.setPhotoType(type);
         image.setTitre(titre);
         image.setMotscles(motscles);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String currentTime = formatter.format(date);
+
+        image.setDateModification(currentTime);
 
         long size = photo.getSize();
 

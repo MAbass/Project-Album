@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebFilter(filterName = "admin-filter", value = {"/profile", "/logout", "/albums", "/add-album", "/imagesAlbum", "/modify-album", "/supprimer-album", "/privileges", "/donner-privileges", "/supp-privileges", "/ajouter-image", "/modifier-image", "/supprimer-image"})
+@WebFilter(filterName = "user-filter", value = {"/profile", "/logout", "/albums", "/add-album", "/imagesAlbum", "/modify-album", "/supprimer-album", "/privileges", "/donner-privileges", "/supp-privileges", "/ajouter-image", "/modifier-image", "/supprimer-image"})
 public class UserFilter implements Filter {
 
     @EJB
@@ -39,17 +39,25 @@ public class UserFilter implements Filter {
         String path = request.getServletPath();
 
         if (user == null) {
-            response.sendRedirect("/AlbumProject-1.0-SNAPSHOT/erreur");
+            String id = request.getParameter("id");
+            Album album = this.albumInterface.findById(Long.parseLong(id));
+            if (album.getStatus().equals("PUBLIC")) {
+                filterChain.doFilter(request, response);
+
+            } else {
+                response.sendRedirect("/AlbumProject-1.0-SNAPSHOT/erreur");
+
+            }
 
         } else {
-            if (user.getRole().equals("ROLE_ADMIN")){
+            if (user.getRole().equals("ROLE_ADMIN")) {
                 filterChain.doFilter(request, response);
                 return;
             }
             if (!user.getRole().equals("ROLE_USER")) {
                 response.sendRedirect("/AlbumProject-1.0-SNAPSHOT/erreur");
 
-            } else{
+            } else {
                 if (path.equals("/modify-album") || path.equals("/supprimer-album") || path.equals("/privileges") || path.equals("/donner-privileges") || path.equals("/supp-privileges") || path.equals("/ajouter-image") || path.equals("/modifier-image") || path.equals("/supprimer-image")) {
                     String idAlbum = request.getParameter("id");
                     String idImage = request.getParameter("idImage");
@@ -58,12 +66,12 @@ public class UserFilter implements Filter {
                     if (filterAlbum(response, user, idAlbum)) return;
                     if (filterAlbum(response, user, idAlbum2)) return;
 
-                    if (idImage != null){
+                    if (idImage != null) {
                         Image image = imageInterface.findById(Long.parseLong(idImage));
 
-                        if (image != null){
+                        if (image != null) {
 
-                            if (!image.getAlbum_appartenant().getUser().getId().equals(user.getId())){
+                            if (!image.getAlbum_appartenant().getUser().getId().equals(user.getId())) {
                                 response.sendRedirect("/AlbumProject-1.0-SNAPSHOT/erreur");
                                 return;
                             }

@@ -68,6 +68,7 @@ public class ImageDao implements ImageInterface {
         query.setParameter("type", image.getPhotoType());
         query.setParameter("motscles", image.getMotscles());
         query.setParameter("id", image.getId());
+        query.setParameter("dateModification", image.getDateModification());
 
         int status = query.executeUpdate();
 
@@ -84,6 +85,8 @@ public class ImageDao implements ImageInterface {
         query.setParameter("hauteur", image.getHauteur());
         query.setParameter("longueur", image.getLongueur());
         query.setParameter("id", image.getId());
+        query.setParameter("dateModification", image.getDateModification());
+
 
         int status = query.executeUpdate();
 

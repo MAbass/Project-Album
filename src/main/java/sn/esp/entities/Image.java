@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "photo")
@@ -14,8 +15,8 @@ import java.io.Serializable;
         @NamedQuery(name = "Image.getLastInsert", query = "SELECT im FROM Image im ORDER BY im.id DESC"),
         @NamedQuery(name = "Image.deleteById", query = "DELETE FROM Image im WHERE im.id= :id"),
         @NamedQuery(name = "Image.findByAlbum", query = "SELECT im FROM Image im WHERE im.album_appartenant= :album"),
-        @NamedQuery(name = "Image.updateSimple", query = "UPDATE Image im SET im.titre=:titre, im.photoType=:type,im.description=:desc, im.motscles=:motscles WHERE im.id=:id"),
-        @NamedQuery(name = "Image.updateComplet", query = "UPDATE Image im SET im.titre=:titre, im.photoType=:type,im.description=:desc, im.motscles=:motscles, im.hauteur=:hauteur, im.longueur=:longueur WHERE im.id=:id"),
+        @NamedQuery(name = "Image.updateSimple", query = "UPDATE Image im SET im.titre=:titre, im.photoType=:type,im.description=:desc, im.motscles=:motscles, im.dateModification=:dateModification WHERE im.id=:id"),
+        @NamedQuery(name = "Image.updateComplet", query = "UPDATE Image im SET im.titre=:titre, im.photoType=:type,im.description=:desc, im.motscles=:motscles, im.hauteur=:hauteur, im.longueur=:longueur, im.dateModification=:dateModification WHERE im.id=:id"),
 
 })
 public class Image implements Serializable {
@@ -41,6 +42,12 @@ public class Image implements Serializable {
     @Column(name = "longueur")
     private int longueur;
 
+    @Column(name = "dateCreation")
+    private String dateCreation;
+
+    @Column(name = "dateModification")
+    private String dateModification;
+
     @ManyToOne
     @JoinColumn(name = "album_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -49,7 +56,7 @@ public class Image implements Serializable {
     public Image() {
     }
 
-    public Image(String titre, String photoType, String description, String motscles, Album album_appartenant, int hauteur, int longueur) {
+    public Image(String titre, String photoType, String description, String motscles, Album album_appartenant, int hauteur, int longueur, String dateCreation, String dateModification) {
         this.hauteur = hauteur;
         this.longueur = longueur;
         this.titre = titre;
@@ -57,15 +64,20 @@ public class Image implements Serializable {
         this.description = description;
         this.motscles = motscles;
         this.album_appartenant = album_appartenant;
+        this.dateCreation = dateCreation;
+        this.dateModification = dateModification;
     }
 
-    public Image(String titre, String type, String desc, String motscles, int height, int width) {
+    public Image(String titre, String type, String desc, String motscles, int height, int width, String dateCreation, String dateModification) {
         this.hauteur = height;
         this.longueur = width;
         this.titre = titre;
         this.photoType = type;
         this.description = desc;
         this.motscles = motscles;
+        this.dateCreation = dateCreation;
+        this.dateModification = dateModification;
+
 
     }
 
@@ -143,6 +155,22 @@ public class Image implements Serializable {
 
     public void setAlbum_appartenant(Album album_appartenant) {
         this.album_appartenant = album_appartenant;
+    }
+
+    public String getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(String dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public String getDateModification() {
+        return dateModification;
+    }
+
+    public void setDateModification(String dateModification) {
+        this.dateModification = dateModification;
     }
 
     @Override
