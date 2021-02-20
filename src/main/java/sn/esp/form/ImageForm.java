@@ -21,8 +21,6 @@ import java.util.Date;
 public class ImageForm {
 
     private static final String CHAMP_ID = "id";
-
-
     private static final String CHAMP_DESC = "desc";
     private static final String CHAMP_TITRE = "titre";
     private static final String CHAMP_CLES = "motscles";
