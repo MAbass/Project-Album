@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 @WebServlet(name = "LoginServlet", value = {"/login","/logout" })
 public class LoginServlet extends HttpServlet {
@@ -39,7 +40,11 @@ public class LoginServlet extends HttpServlet {
         if (path.equals("/login")){
             LoginForm loginForm = new LoginForm(userInterface);
 
-            loginForm.seConnecter(request);
+            try {
+                loginForm.seConnecter(request);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
 
             getServletContext().getRequestDispatcher(VUE_LOGIN).forward(request, response);
         }

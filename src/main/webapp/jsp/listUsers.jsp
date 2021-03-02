@@ -66,19 +66,21 @@
                     </core:when>
                     <core:otherwise>
                         <core:forEach items="${users}" var="user">
-                            <tr>
-                                <td>${user.nom}</td>
-                                <td>${user.prenom}</td>
-                                <td>${user.login}</td>
-                                <td>${user.password}</td>
-                                <td>${user.role}</td>
-                                <td><a href="${pageContext.request.contextPath}/modifier-user?id=${user.id}"
-                                       class="modif">Modifier</a>
-                                </td>
-                                <td><a href="${pageContext.request.contextPath}/supprimer-user?id=${user.id}"
-                                       class="supp">Supprimer</a>
-                                </td>
-                            </tr>
+                            <core:if test="${sessionUser.id != user.id}">
+                                <tr>
+                                    <td>${user.nom}</td>
+                                    <td>${user.prenom}</td>
+                                    <td>${user.login}</td>
+                                    <td>${user.password}</td>
+                                    <td>${user.role}</td>
+                                    <td><a href="${pageContext.request.contextPath}/modifier-user?id=${user.id}"
+                                           class="modif">Modifier</a>
+                                    </td>
+                                    <td><a href="${pageContext.request.contextPath}/supprimer-user?id=${user.id}"
+                                           class="supp">Supprimer</a>
+                                    </td>
+                                </tr>
+                            </core:if>
                         </core:forEach>
 
                     </core:otherwise>

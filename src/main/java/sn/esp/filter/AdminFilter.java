@@ -30,6 +30,7 @@ public class AdminFilter implements Filter {
             response.sendRedirect("/AlbumProject-1.0-SNAPSHOT/erreur");
 
         } else {
+            System.out.println("User = "+user.toString());
             if (!user.getRole().equals("ROLE_ADMIN")) {
                 response.sendRedirect("/AlbumProject-1.0-SNAPSHOT/erreur");
             } else {

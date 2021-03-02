@@ -2,8 +2,10 @@ package sn.esp.form;
 
 import sn.esp.entities.Utilisateur;
 import sn.esp.interf.UserInterface;
+import sn.esp.utility.CryptPassword;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.NoSuchAlgorithmException;
 
 public class RegistrationForm {
 
@@ -21,12 +23,12 @@ public class RegistrationForm {
     }
 
 
-    public void ajouter(HttpServletRequest request) {
+    public void ajouter(HttpServletRequest request) throws NoSuchAlgorithmException {
         String nom = request.getParameter(CHAMP_NOM);
         String prenom = request.getParameter(CHAMP_PRENOM);
         String mail = request.getParameter(CHAMP_MAIL);
         String login = request.getParameter(CHAMP_LOGIN);
-        String password = request.getParameter(CHAMP_PASSWORD);
+        String password = CryptPassword.toHexString(CryptPassword.getSHA(request.getParameter(CHAMP_PASSWORD)));
         String role = request.getParameter(CHAMP_ROLE);
         Utilisateur user = new Utilisateur(nom, prenom, login, mail, password, role);
 
@@ -60,12 +62,12 @@ public class RegistrationForm {
 
     }
 
-    public void profile(HttpServletRequest request) {
+    public void profile(HttpServletRequest request) throws NoSuchAlgorithmException {
         String nom = request.getParameter(CHAMP_NOM);
         String prenom = request.getParameter(CHAMP_PRENOM);
         String mail = request.getParameter(CHAMP_MAIL);
         String login = request.getParameter(CHAMP_LOGIN);
-        String password = request.getParameter(CHAMP_PASSWORD);
+        String password = CryptPassword.toHexString(CryptPassword.getSHA(request.getParameter(CHAMP_PASSWORD)));
         String id = request.getParameter(CHAMP_ID);
 
         Utilisateur user = this.userInterface.findById(Long.parseLong(id));

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @WebServlet(name = "UserServlet", value = {"/acceuil", "/createAccount","/profile", "/erreur"})
@@ -66,12 +67,20 @@ public class ServletUser extends HttpServlet {
 
         if (path.equals("/createAccount")){
             RegistrationForm registrationForm = new RegistrationForm(userInterface);
-            registrationForm.ajouter(request);
+            try {
+                registrationForm.ajouter(request);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
             getServletContext().getRequestDispatcher(VUE_INSCRIPTION).forward(request, response);
 
         }else {
             RegistrationForm registrationForm = new RegistrationForm(userInterface);
-            registrationForm.profile(request);
+            try {
+                registrationForm.profile(request);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
             getServletContext().getRequestDispatcher(VUE_PROFILE).forward(request, response);
 
         }

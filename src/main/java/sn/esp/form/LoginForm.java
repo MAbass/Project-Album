@@ -2,9 +2,11 @@ package sn.esp.form;
 
 import sn.esp.entities.Utilisateur;
 import sn.esp.interf.UserInterface;
+import sn.esp.utility.CryptPassword;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginForm {
 
@@ -16,11 +18,10 @@ public class LoginForm {
         this.userInterface = userInterface;
     }
 
-    public void seConnecter(HttpServletRequest request) {
+    public void seConnecter(HttpServletRequest request) throws NoSuchAlgorithmException {
 
         String login = request.getParameter(CHAMP_USERNAME);
-        String password = request.getParameter(CHAMP_PASSWORD);
-
+        String password = CryptPassword.toHexString(CryptPassword.getSHA(request.getParameter(CHAMP_PASSWORD)));
 
         Utilisateur user = this.userInterface.getUserByLogin(login);
 
