@@ -9,8 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 
 public class LoginForm {
-
-    private UserInterface userInterface;
+    private final UserInterface userInterface;
     public static final String CHAMP_USERNAME = "username";
     public static final String CHAMP_PASSWORD = "password";
 
